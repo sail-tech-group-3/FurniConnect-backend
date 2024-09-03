@@ -8,7 +8,7 @@ module.exports = catchAsync(async (req, res) => {
     email,
     amount: amount * 100,
     date,
-    callback_url: `${proc.env.CALLBACK_URL}`,
+    callback_url: `${process.env.CALLBACK_URL}`,
   };
 
   const response = await axios.post(
