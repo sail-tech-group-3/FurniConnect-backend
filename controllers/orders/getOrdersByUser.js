@@ -3,10 +3,10 @@ const APIFeatures = require("../../utils/apiFeatures");
 const catchAsync = require("../../utils/catchAsync");
 
 module.exports = catchAsync(async (req, res) => {
-  const features = new APIFeatures(
-    Order.find({ user: req.user._id }),
-    req.query
-  )
+  const userId = req.params.userId;
+  console.log(req.params);
+
+  const features = new APIFeatures(Order.find({ user: userId }), req.query)
     .filter()
     .sort()
     .limitFields()

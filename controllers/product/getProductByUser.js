@@ -3,21 +3,20 @@ const APIFeatures = require("../../utils/apiFeatures");
 const catchAsync = require("../../utils/catchAsync");
 
 module.exports = catchAsync(async (req, res, next) => {
-  // Ensure the `username` field is correct. Change `req.user.username` to `req.user.userName` if needed.
   const features = new APIFeatures(
-    Product.find({ createdBy: req.user.userName }), // Use the correct field based on your `req.user` structure
-    req.query
+    Product.find({ createdBy: req.user.userName })
   )
     .filter()
     .sort()
     .limitFields()
-    .paginate(); // Apply pagination
+    .paginate();
 
   const products = await features.query;
-  const total = await Product.countDocuments({ createdBy: req.user.userName }); // Total count of products for pagination
+  const total = await Product.countDocuments({ createdBy: req.user.userName });
 
   res.status(200).json({
     status: "success",
+    results:products.length,
     data: {
       products,
       total,
