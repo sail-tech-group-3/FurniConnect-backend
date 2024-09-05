@@ -21,8 +21,6 @@ const createProduct = [
   upload.array("images", 5),
   catchAsync(async (req, res, next) => {
     try {
-      console.log("Request body:", req.body);
-      console.log("Request files:", req.files);
       const fields = {
         name: req.body.name,
         price: req.body.price,
@@ -32,9 +30,8 @@ const createProduct = [
         isFeatured: req.body.isFeatured || false,
         createdBy: req.user.userName,
       };
-      console.log("Fields to save:", fields);
       const newProduct = await Product.create(fields);
-      console.log("Product created:", newProduct);
+
       const user = await User.findOne({ userName: req.user.userName });
       if (user) {
         await user.incrementProductCount();

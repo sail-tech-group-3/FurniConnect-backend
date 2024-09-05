@@ -32,7 +32,7 @@ const sendErrorDev = (err, req, res, statusCode) => {
       stack: err.stack,
     });
   }
-  console.error("ERROR 💥", err);
+
   return res.status(statusCode).render("error", {
     title: "Something went wrong!",
     msg: err.message,
@@ -47,7 +47,7 @@ const sendErrorProd = (err, req, res, statusCode) => {
         message: err.message,
       });
     }
-    console.error("ERROR 💥", err);
+
     return res.status(statusCode).json({
       status: "error",
       message: "Something went very wrong!",
@@ -59,7 +59,7 @@ const sendErrorProd = (err, req, res, statusCode) => {
       msg: err.message,
     });
   }
-  console.error("ERROR 💥", err);
+  console.error("ERROR", err);
   return res.status(statusCode).render("error", {
     title: "Something went wrong!",
     msg: "Please try again later.",
@@ -70,7 +70,6 @@ module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
 
-  // Ensure statusCode is valid
   const statusCode =
     err.statusCode && err.statusCode >= 100 && err.statusCode < 600
       ? err.statusCode

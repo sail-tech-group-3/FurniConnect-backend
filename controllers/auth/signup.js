@@ -8,7 +8,11 @@ const signToken = (id) => {
   });
 };
 
-module.exports = catchAsync(async (req, res, next) => {
+module.exports = catchAsync(async (req, res, _next) => {
+  if (req.body.email) {
+    req.body.email = `+234${req.body.email}`;
+  }
+
   const newUser = await User.create(req.body);
   const token = signToken(newUser._id);
 

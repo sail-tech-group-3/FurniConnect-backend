@@ -4,7 +4,6 @@ const authController = require("../controllers/authController");
 const orderController = require("../controllers/orderController");
 const router = express.Router();
 
-// Protect all routes from here on
 router.use(authController.protect);
 
 router.route("/:userId").get(orderController.getOrdersByUser);

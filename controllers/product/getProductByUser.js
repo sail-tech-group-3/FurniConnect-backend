@@ -4,7 +4,8 @@ const catchAsync = require("../../utils/catchAsync");
 
 module.exports = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(
-    Product.find({ createdBy: req.user.userName })
+    Product.find({ createdBy: req.user.userName }),
+    req.query
   )
     .filter()
     .sort()
@@ -16,7 +17,7 @@ module.exports = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    results:products.length,
+    results: products.length,
     data: {
       products,
       total,
