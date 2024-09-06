@@ -4,7 +4,6 @@ const catchAsync = require("../../utils/catchAsync");
 
 module.exports = catchAsync(async (req, res) => {
   const userId = req.params.userId;
-  console.log(req.params);
 
   const features = new APIFeatures(Order.find({ user: userId }), req.query)
     .filter()

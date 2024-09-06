@@ -36,7 +36,7 @@ const createProduct = [
       if (user) {
         await user.incrementProductCount();
       } else {
-        console.error("User not found.");
+        console.error("user not found");
       }
       res.status(201).json({
         status: "success",
@@ -45,7 +45,7 @@ const createProduct = [
         },
       });
     } catch (err) {
-      console.error("Error creating product:", err);
+      console.error(err);
       res
         .status(500)
         .json({ status: "error", message: "Internal Server Error" });
@@ -57,9 +57,6 @@ const updateProduct = [
   upload.array("images", 5),
   catchAsync(async (req, res, next) => {
     try {
-      console.log("Request body:", req.body);
-      console.log("Request files:", req.files);
-
       const updateFields = {
         name: req.body.name,
         description: req.body.description,
@@ -68,7 +65,6 @@ const updateProduct = [
         isFeatured: req.body.isFeatured || false,
       };
 
-      // Only update images if new files were uploaded
       if (req.files && req.files.length > 0) {
         updateFields.images = req.files.map((file) => file.path);
       }
@@ -93,7 +89,7 @@ const updateProduct = [
         },
       });
     } catch (err) {
-      console.error("Error updating product:", err);
+      console.error(err);
       res
         .status(500)
         .json({ status: "error", message: "Internal Server Error" });

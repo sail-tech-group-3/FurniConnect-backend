@@ -8,12 +8,13 @@ router.use(authController.protect);
 
 router.route("/:userId").get(orderController.getOrdersByUser);
 
-router.use(authController.restrictTo("admin"));
 router
   .route("/")
-  .get(orderController.getAllOrders)
+  .get(authController.restrictTo("admin"), orderController.getAllOrders)
   .post(orderController.createOrder);
 
-router.route("/:id").delete(orderController.deleteOrder);
+router
+  .route("/:id")
+  .delete(authController.restrictTo("admin"), orderController.deleteOrder);
 
 module.exports = router;
